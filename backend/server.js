@@ -8,16 +8,12 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { getDb } from "./db.js";
 import fs from "fs";
 
-// ─── Gemini Setup ─────────────────────────────────────────────
+// ─── Gemini Setup
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({
   model: "gemini-3-flash-preview",
 });
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 536a6b6807a875a00d3f12e6195eb61f55f36a42
 const docs = JSON.parse(
   fs.readFileSync(new URL("./docs.json", import.meta.url)),
 );
@@ -25,7 +21,7 @@ const docs = JSON.parse(
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// ─── Middleware 
+// ─── Middleware
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 
@@ -40,11 +36,6 @@ app.use(
   }),
 );
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 536a6b6807a875a00d3f12e6195eb61f55f36a42
 function getRecentHistory(sessionId, pairCount = 5) {
   const db = getDb();
 
@@ -114,11 +105,7 @@ app.post("/api/chat", async (req, res) => {
        VALUES (?, 'user', ?, datetime('now'))`,
     ).run(sessionId, message.trim());
 
-<<<<<<< HEAD
     // Get last 5 pairs
-=======
-    //Get last 5 pairs 
->>>>>>> 536a6b6807a875a00d3f12e6195eb61f55f36a42
     const history = getRecentHistory(sessionId);
     const historyText = history.length
       ? history
@@ -160,11 +147,7 @@ ${message}
 Answer:
 `;
 
-<<<<<<< HEAD
     //  Gemini Call
-=======
-    
->>>>>>> 536a6b6807a875a00d3f12e6195eb61f55f36a42
     const result = await model.generateContent(prompt);
 
     const rawReply =
@@ -204,11 +187,7 @@ Answer:
   }
 });
 
-<<<<<<< HEAD
 // Other Routes
-=======
-// ─── Other Routes
->>>>>>> 536a6b6807a875a00d3f12e6195eb61f55f36a42
 
 app.get("/api/conversations/:sessionId", (req, res) => {
   const db = getDb();
