@@ -11,10 +11,9 @@ import fs from "fs";
 // ─── Gemini Setup ─────────────────────────────────────────────
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash", // stable & cheaper than preview
+  model: "gemini-3-flash-preview",
 });
 
-// ─── Load Docs ────────────────────────────────────────────────
 const docs = JSON.parse(
   fs.readFileSync(new URL("./docs.json", import.meta.url)),
 );
@@ -36,8 +35,6 @@ app.use(
     },
   }),
 );
-
-// ─── Helpers ──────────────────────────────────────────────────
 
 function getRecentHistory(sessionId, pairCount = 5) {
   const db = getDb();
@@ -78,7 +75,7 @@ function validateResponse(reply) {
   return reply.trim();
 }
 
-// ─── Routes ───────────────────────────────────────────────────
+// Routes
 
 app.post("/api/chat", async (req, res) => {
   const { sessionId, message } = req.body;
@@ -92,7 +89,6 @@ app.post("/api/chat", async (req, res) => {
   const db = getDb();
 
   try {
-    // Ensure session exists
     const session = db
       .prepare("SELECT id FROM sessions WHERE id = ?")
       .get(sessionId);
@@ -104,13 +100,12 @@ app.post("/api/chat", async (req, res) => {
       ).run(sessionId);
     }
 
-    // Save user message
     db.prepare(
       `INSERT INTO messages (session_id, role, content, created_at)
        VALUES (?, 'user', ?, datetime('now'))`,
     ).run(sessionId, message.trim());
 
-    // ─── Get last 5 pairs (context memory) ─────────────────────
+    // Get last 5 pairs
     const history = getRecentHistory(sessionId);
     const historyText = history.length
       ? history
@@ -120,7 +115,7 @@ app.post("/api/chat", async (req, res) => {
           .join("\n")
       : "No previous conversation.";
 
-    // ─── 🔥 TOKEN OPTIMIZATION: Only send relevant doc ─────────
+    //  TOKEN OPTIMIZATION: Only send relevant doc
     const matchedDoc = docs.find((d) =>
       message.toLowerCase().includes(d.title.toLowerCase()),
     );
@@ -129,7 +124,7 @@ app.post("/api/chat", async (req, res) => {
       ? `### ${matchedDoc.title}\n${matchedDoc.content}`
       : docs.map((d) => `### ${d.title}\n${d.content}`).join("\n\n");
 
-    // ─── Prompt ────────────────────────────────────────────────
+    // Prompt
     const prompt = `
 You are a customer support assistant.
 
@@ -152,7 +147,7 @@ ${message}
 Answer:
 `;
 
-    // ─── Gemini Call ───────────────────────────────────────────
+    //  Gemini Call
     const result = await model.generateContent(prompt);
 
     const rawReply =
@@ -192,7 +187,7 @@ Answer:
   }
 });
 
-// ─── Other Routes ─────────────────────────────────────────────
+// Other Routes
 
 app.get("/api/conversations/:sessionId", (req, res) => {
   const db = getDb();
@@ -236,8 +231,6 @@ app.get("/api/health", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(
-    `✅ Support Assistant backend running on http://localhost:${PORT}`,
-  );
+  console.log(`Support Assistant backend running on http://localhost:${PORT}`);
   getDb();
 });
