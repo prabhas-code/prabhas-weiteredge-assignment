@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Reset Password",
+    "content": "Users can reset their password from Settings > Security. Click on 'Change Password', enter your current password, then enter and confirm your new password. If you've forgotten your current password, use the 'Forgot Password' link on the login page to receive a reset link via email."
+  },
+  {
+    "title": "Refund Policy",
+    "content": "Refunds are allowed within 7 days of purchase. To request a refund, go to your Account > Order History, select the order, and click 'Request Refund'. Refunds are processed within 3-5 business days back to your original payment method. Digital downloads are non-refundable after the download has been initiated."
+  },
+  {
+    "title": "Account Registration",
+    "content": "To create an account, click the 'Sign Up' button on the homepage. You will need to provide your email address, a username, and a password. After submitting, you will receive a verification email. Click the link in the email to activate your account."
+  },
+  {
+    "title": "Two-Factor Authentication",
+    "content": "Two-factor authentication (2FA) can be enabled from Settings > Security > Two-Factor Authentication. We support authenticator apps (like Google Authenticator or Authy) and SMS-based 2FA. It is strongly recommended to enable 2FA to improve the security of your account."
+  },
+  {
+    "title": "Billing and Subscriptions",
+    "content": "You can manage your subscription from Account > Billing. Available plans are Free, Pro ($9.99/month), and Enterprise (custom pricing). You can upgrade, downgrade, or cancel at any time. Cancellations take effect at the end of the current billing cycle. Annual plans receive a 20% discount."
+  },
+  {
+    "title": "Contacting Support",
+    "content": "Support is available Monday–Friday, 9am–6pm EST. You can reach us via live chat on our website, by emailing support@example.com, or by submitting a ticket at help.example.com. Response times: Live chat within minutes, Email within 24 hours, Tickets within 48 hours."
+  },
+  {
+    "title": "Data Export",
+    "content": "You can export all your account data from Settings > Privacy > Export Data. The export will be prepared as a ZIP file containing JSON and CSV formats. You will receive an email with a download link within 1 hour. Data exports are available once every 30 days."
+  },
+  {
+    "title": "Deleting Your Account",
+    "content": "To permanently delete your account, go to Settings > Privacy > Delete Account. This action is irreversible. All your data will be deleted within 30 days. Active subscriptions must be cancelled before deleting your account. Export your data before proceeding as it cannot be recovered."
+  }
+]
