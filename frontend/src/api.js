@@ -1,4 +1,4 @@
-const BASE_URL = "https://prabhas-weiteredge-assignment-backend.onrender.com";
+const BASE_URL = "https://prabhas-weiteredge-assignment-backend.onrender.com/api";
 
 export async function sendMessage(sessionId, message) {
   const res = await fetch(`${BASE_URL}/chat`, {
